@@ -9,7 +9,7 @@ namespace Movies.Application.Services.Interfaces
 {
     public interface IMovieWatchlistService
     {
-        Task AddToWatchlist(int userId, Movie movie);
+        Task AddToWatchlist();
         Task MarkAsWatched(int userId, int movieId);
         Task<List<WatchlistItem>> GetWatchlistItems(int userId);
     }

@@ -8,5 +8,10 @@ namespace Movies.Application.Models
 {
     public class WatchlistItemResponse
     {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int MovieId { get; set; }
+        public string Title { get; set; }
+        public bool IsWatched { get; set; }
     }
 }

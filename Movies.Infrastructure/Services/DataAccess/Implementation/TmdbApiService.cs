@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Movies.API.Models;
-using Movies.Application.Models;
-using Movies.Application.Services.Interfaces;
+﻿using Movies.Application.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

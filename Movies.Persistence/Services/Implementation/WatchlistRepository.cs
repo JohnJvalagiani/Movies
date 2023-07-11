@@ -27,7 +27,6 @@ namespace Movies.Infrastructure.Services.DataAccess.Implementation
                 MovieId = movie.id,
                 Title = movie.title,
             };
-
             _dbContext.WatchlistItems.Add(watchlistItem);
             await _dbContext.SaveChangesAsync();
         }
