@@ -1,7 +1,11 @@
-﻿using Movies.Application.Services.Interfaces;
+﻿using Microsoft.Extensions.Options;
+using Movies.Application.Services.Interfaces;
+using Movies.Domain.Entities;
+using Movies.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +20,7 @@ namespace Movies.Application.Services.Implementation
             _apiKeyConfig = apiKeyConfig.Value;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<IEnumerable<MovieResponse>> SearchMovies(string title, int year)
+        public async Task<IEnumerable<Movie>> SearchMovies(string title, int year)
         {
             var url = "https://api.themoviedb.org/3/search/movie";
             var query = "Jack Reacher";
@@ -41,7 +45,7 @@ namespace Movies.Application.Services.Implementation
             {
                 Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
             }
-            return new List<MovieResponse> { };
+            return new List<Movie> { };
         }
     }
 }

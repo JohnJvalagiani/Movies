@@ -9,9 +9,9 @@ namespace Movies.Application.Services.Interfaces
 {
     public interface IMovieWatchlistService
     {
-        Task AddToWatchlist();
-        Task MarkAsWatched(int userId, int movieId);
-        Task<List<WatchlistItem>> GetWatchlistItems(int userId);
+        public Task<bool> AddToWatchlist(int userId, Movie movie);
+        public Task<bool> MarkAsWatched(int userId, int movieId);
+        public Task<List<WatchlistItem>> GetWatchlistItems(int userId);
     }
 
 }

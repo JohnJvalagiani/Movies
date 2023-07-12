@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Movies.Application.Models;
+using Movies.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,8 @@ namespace Movies.Application.Profiles
     {
         public MovieProfile()
         {
-            CreateMap<SourceObject, DestinationObject>();
+            CreateMap<WatchlistItemResponse, WatchlistItem>().ReverseMap();
+            CreateMap<Movie, MovieResponse>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Movies.Application.Models;
+﻿using Movies.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Movies.Application.Services.Interfaces
 {
     public interface IMovieSearchService
     {
-        Task<IEnumerable<MovieResponse>> SearchMovies(string title, int year);
+        Task<IEnumerable<Movie>> SearchMovies(string title, int year);
     }
 
 }

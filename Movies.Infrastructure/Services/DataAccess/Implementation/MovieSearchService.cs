@@ -1,5 +1,5 @@
-﻿using Movies.Application.Models;
-using Movies.Application.Services.Interfaces;
+﻿using Movies.Application.Services.Interfaces;
+using Movies.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Movies.Application.Services.Implementation
             _imdbApiService = imdbApiService;
         }
 
-        public async Task<IEnumerable<MovieResponse>> SearchMovies(string title, int year)
+        public async Task<IEnumerable<Movie>> SearchMovies(string title, int year)
         {
             var movies = await _imdbApiService.SearchMovies(title, year);
             return movies;

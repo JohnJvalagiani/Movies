@@ -1,5 +1,5 @@
-﻿using Movies.Application.Models;
-using Movies.Application.Services.Interfaces;
+﻿using Movies.Application.Services.Interfaces;
+using Movies.Domain.Entities;
 using Movies.Infrastructure.Services.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,21 +18,23 @@ namespace Movies.Application.Services.Implementation
             _watchlistRepository = watchlistRepository;
         }
 
-        public async Task AddToWatchlist(int userId, Movie movie)
+        public async Task<bool> AddToWatchlist(int userId, Movie movie)
         {
             await _watchlistRepository.AddToWatchlist(userId, movie);
+            return true;
         }
 
-        public async Task MarkAsWatched(int userId, int movieId)
-        {
-            await _watchlistRepository.MarkAsWatched(userId, movieId);
-        }
-
-        public async Task<List<WatchlistItemResponse>> GetWatchlistItems(int userId)
+        public async Task<List<WatchlistItem>> GetWatchlistItems(int userId)
         {
             // Retrieve the watchlist items for the user from the repository
             var watchlistItems = await _watchlistRepository.GetWatchlistItems(userId);
             return watchlistItems;
+        }
+
+        public async Task<bool> MarkAsWatched(int userId, int movieId)
+        {
+            await _watchlistRepository.MarkAsWatched(userId, movieId);
+            return true;
         }
     }
 

@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using Movies.API.Commands;
+using Movies.Application.Services.Interfaces;
 
 namespace Movies.API.Handlers
 {
     public class MarkAsWatchedCommandHandler : IRequestHandler<MarkAsWatchedCommand>
     {
-        private readonly IWatchlistService _watchlistService;
+        private readonly IMovieWatchlistService _watchlistService;
 
-        public MarkAsWatchedCommandHandler(IWatchlistService watchlistService)
+        public MarkAsWatchedCommandHandler(IMovieWatchlistService watchlistService)
         {
             _watchlistService = watchlistService;
         }
