@@ -2,17 +2,20 @@
 using Movies.Application.Services.Interfaces;
 using Movies.Domain.Entities;
 using Movies.Infrastructure.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace Movies.Application.Services.Implementation
 {
     public class TmdbApiService : ITmdbApiService
     {
+        private readonly string _baseAPIUrl= "https://api.themoviedb.org/3/search/movie";
         private readonly ApiKeyConfiguration _apiKeyConfig;
         private readonly IHttpClientFactory _httpClientFactory;
         public TmdbApiService(IOptions<ApiKeyConfiguration> apiKeyConfig, IHttpClientFactory httpClientFactory)
@@ -20,32 +23,14 @@ namespace Movies.Application.Services.Implementation
             _apiKeyConfig = apiKeyConfig.Value;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<IEnumerable<Movie>> SearchMovies(string title, int year)
+        public async Task<MovieList> SearchMovies(string searchQuery)
         {
-            var url = "https://api.themoviedb.org/3/search/movie";
-            var query = "Jack Reacher";
-            var apiKey = "38e17ed9fec400f7d0444bee8e27c35f";
-
-            var httpClient = new HttpClient();
-
-            // Construct the request URL with query parameters
-            var requestUrl = $"{url}?query={Uri.EscapeDataString(query)}&api_key={apiKey}";
-
-            // Send GET request
-            var response = await httpClient.GetAsync(requestUrl);
-
-            // Check if the request was successful
-            if (response.IsSuccessStatusCode)
-            {
-                // Read the response content
+                var httpClient = new HttpClient();
+                var requestUrl = $"{_baseAPIUrl}?query={Uri.EscapeDataString(searchQuery)}&api_key={_apiKeyConfig.ApiKey}";
+                var response = await httpClient.GetAsync(requestUrl);
                 var responseBody = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(responseBody);
-            }
-            else
-            {
-                Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-            }
-            return new List<Movie> { };
+                var movieList=JsonConvert.DeserializeObject<MovieList>(responseBody);
+                return movieList;
         }
     }
 }

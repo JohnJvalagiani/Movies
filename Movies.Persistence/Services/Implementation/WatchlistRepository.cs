@@ -12,9 +12,9 @@ namespace Movies.Infrastructure.Services.DataAccess.Implementation
 {
     public class WatchlistRepository : IWatchlistRepository
     {
-        private readonly WatchlistDbContext _dbContext;
+        private readonly MovieDbContext _dbContext;
 
-        public WatchlistRepository(WatchlistDbContext dbContext)
+        public WatchlistRepository(MovieDbContext dbContext)
         {
             _dbContext = dbContext;
         }

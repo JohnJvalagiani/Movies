@@ -8,9 +8,7 @@ using Movies.Application.Models;
 namespace Movies.API.Controllers
 {
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MoviesController : ControllerBase
+    public class MoviesController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -19,7 +17,6 @@ namespace Movies.API.Controllers
             _mediator = mediator;
         }
 
-        // Endpoint for searching movies
         [HttpGet("search")]
         public async Task<ActionResult<List<MovieResponse>>> SearchMovies([FromQuery] MovieSearchQuery query)
         {
@@ -27,7 +24,6 @@ namespace Movies.API.Controllers
             return movies;
         }
 
-        // Endpoint for adding a movie to the watchlist
         [HttpPost("watchlist")]
         public async Task<IActionResult> AddToWatchlist(AddToWatchlistCommand command)
         {
@@ -35,7 +31,6 @@ namespace Movies.API.Controllers
             return Ok();
         }
 
-        // Endpoint for marking a movie as watched
         [HttpPut("watchlist/{movieId}/watched")]
         public async Task<IActionResult> MarkAsWatched(int movieId, [FromBody] MarkAsWatchedCommand command)
         {
@@ -44,14 +39,13 @@ namespace Movies.API.Controllers
             return Ok();
         }
 
-        //// Endpoint for getting the watchlist items for a user
-        //[HttpGet("watchlist/{userId}")]
-        //public async Task<ActionResult<List<WatchlistItemResponse>>> GetWatchlistItems(int userId)
-        //{
-        //    var query = new GetWatchlistItemsQuery { UserId = userId };
-        //    var watchlistItems = await _mediator.Send(query);
-        //    return watchlistItems;
-        //}
+        [HttpGet("watchlist/{userId}")]
+        public async Task<ActionResult<List<WatchlistItemResponse>>> GetWatchlistItems(int userId)
+        {
+            var query = new GetWatchlistItemsQuery { UserId = userId };
+            var watchlistItems = await _mediator.Send(query);
+            return watchlistItems;
+        }
     }
 
 }

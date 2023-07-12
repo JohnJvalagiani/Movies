@@ -9,6 +9,6 @@ namespace Movies.Application.Services.Interfaces
 {
     public interface ITmdbApiService
     {
-        public Task<IEnumerable<Movie>> SearchMovies(string title, int year);
+        public Task<MovieList> SearchMovies(string searchQuery);
     }
 }

@@ -19,8 +19,8 @@ namespace Movies.API.Handlers
 
         public async Task<List<MovieResponse>> Handle(MovieSearchQuery request, CancellationToken cancellationToken)
         {
-            var movies = await _imdbApiService.SearchMovies(request.Title, request.Year);
-            return _mapper.Map<List< MovieResponse >>( movies);
+            var movies = await _imdbApiService.SearchMovies(request.searchQuery);
+            return _mapper.Map<List<MovieResponse>>( movies.results);
         }
     }
 }

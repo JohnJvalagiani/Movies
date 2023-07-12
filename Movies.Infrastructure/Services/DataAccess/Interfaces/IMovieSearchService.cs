@@ -9,7 +9,7 @@ namespace Movies.Application.Services.Interfaces
 {
     public interface IMovieSearchService
     {
-        Task<IEnumerable<Movie>> SearchMovies(string title, int year);
+        Task<MovieList> SearchMovies(string searchQuery);
     }
 
 }

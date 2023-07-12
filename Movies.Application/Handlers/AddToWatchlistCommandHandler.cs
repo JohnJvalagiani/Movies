@@ -3,6 +3,7 @@ using MediatR;
 using Movies.API.Commands;
 using Movies.Application.Models;
 using Movies.Application.Services.Interfaces;
+using Movies.Domain.Entities;
 
 namespace Movies.API.Handlers
 {
@@ -17,7 +18,7 @@ namespace Movies.API.Handlers
 
         public async Task<Unit> Handle(AddToWatchlistCommand request, CancellationToken cancellationToken)
         {
-            var response=await _movieWatchlistService.AddToWatchlist();
+            var response=await _movieWatchlistService.AddToWatchlist(request.UserId,new Movie { });
             return new Unit();
         }
     }

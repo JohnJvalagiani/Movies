@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Movies.Persistence.Data
 {
-    public class WatchlistDbContext : DbContext
+    public class MovieDbContext : DbContext
     {
-        public WatchlistDbContext(DbContextOptions<WatchlistDbContext> options) : base(options)
+        public MovieDbContext(DbContextOptions<MovieDbContext> options) : base(options)
         {
         }
 

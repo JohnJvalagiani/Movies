@@ -17,9 +17,9 @@ namespace Movies.Application.Services.Implementation
             _imdbApiService = imdbApiService;
         }
 
-        public async Task<IEnumerable<Movie>> SearchMovies(string title, int year)
+        public async Task<MovieList> SearchMovies(string searchQuery)
         {
-            var movies = await _imdbApiService.SearchMovies(title, year);
+            var movies = await _imdbApiService.SearchMovies(searchQuery);
             return movies;
         }
     }
