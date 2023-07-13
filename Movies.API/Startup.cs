@@ -40,11 +40,9 @@ namespace Movies.API
             Services.AddTransient<ITmdbApiService, TmdbApiService>();
             Services.AddTransient<IRequestHandler<MovieSearchCommand, List<MovieResponse>>, MovieSearchQueryHandler>();
             Services.AddTransient<IRequestHandler<AddMovieToWatchlistCommand, WatchlistItemResponse>, AddToWatchlistCommandHandler>();
-            Services.AddTransient<IRequestHandler<MarkAsWatchedCommand>, MarkAsWatchedCommandHandler>();
+            Services.AddTransient<IRequestHandler<MarkAsWatchedCommand, WatchlistItemResponse>, MarkAsWatchedCommandHandler>();
             Services.AddTransient<IRequestHandler<GetWatchlistItemsQuery, List<WatchlistItemResponse>>, GetWatchlistItemsQueryHandler>();
             Services.Configure<ApiKeyConfiguration>(Configuration.GetSection("ApiKeyConfiguration"));
-            var ddef= Configuration.GetSection("ApiKeyConfiguration");
-            var def= Configuration.GetConnectionString("DefaultConnection");
             Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             Services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
             Services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehavior<,>));

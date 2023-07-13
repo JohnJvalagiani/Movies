@@ -21,7 +21,7 @@ namespace Movies.API.Handlers
         public async Task<WatchlistItemResponse> Handle(AddMovieToWatchlistCommand request, CancellationToken cancellationToken)
         {
             var response=await _movieWatchlistService.AddToWatchlist(_mapper.Map<WatchlistItem>(request));
-            return new WatchlistItemResponse();
+            return _mapper.Map<WatchlistItemResponse>(response);
         }
     }
 }

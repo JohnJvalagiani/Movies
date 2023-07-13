@@ -18,10 +18,9 @@ namespace Movies.Application.Services.Implementation
             _watchlistRepository = watchlistRepository;
         }
 
-        public async Task<bool> AddToWatchlist(WatchlistItem watchlistItem)
+        public async Task<WatchlistItem> AddToWatchlist(WatchlistItem watchlistItem)
         {
-            await _watchlistRepository.AddToWatchlist(watchlistItem);
-            return true;
+           return await _watchlistRepository.AddToWatchlist(watchlistItem);
         }
 
         public async Task<List<WatchlistItem>> GetWatchlistItems(int userId)
@@ -30,10 +29,9 @@ namespace Movies.Application.Services.Implementation
             return watchlistItems;
         }
 
-        public async Task<bool> MarkAsWatched(int userId, int movieId)
+        public async Task<WatchlistItem> MarkAsWatched(int userId, int movieId)
         {
-            await _watchlistRepository.MarkAsWatched(userId, movieId);
-            return true;
+            return await _watchlistRepository.MarkAsWatched(userId, movieId);
         }
     }
 

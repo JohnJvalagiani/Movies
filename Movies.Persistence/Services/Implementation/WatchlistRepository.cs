@@ -19,33 +19,48 @@ namespace Movies.Infrastructure.Services.DataAccess.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task AddToWatchlist(WatchlistItem watchlistItem)
+        public async Task<WatchlistItem> AddToWatchlist(WatchlistItem watchlistItem)
         {
+            Guid guid = Guid.NewGuid();
             var theWatchlistItem = new WatchlistItem
             {
+                Id = guid.GetHashCode(),
                 UserId = watchlistItem.UserId,
                 MovieId = watchlistItem.MovieId,
                 Title = watchlistItem.Title,
                 IsWatched= watchlistItem.IsWatched,
             };
+
             _dbContext.WatchlistItems.Add(watchlistItem);
-            var result= await _dbContext.SaveChangesAsync();
-            if(result==0)
+            try
             {
-               
+            var result = await _dbContext.SaveChangesAsync();
+                return theWatchlistItem;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
-        public async Task MarkAsWatched(int userId, int movieId)
+        public async Task<WatchlistItem> MarkAsWatched(int userId, int movieId)
         {
             var watchlistItem = await _dbContext.WatchlistItems
                 .FirstOrDefaultAsync(w => w.UserId == userId && w.MovieId == movieId);
 
-            if (watchlistItem != null)
+            if (watchlistItem == null)
+                throw new DirectoryNotFoundException("$\"Content with movie Id {movieId} and with user Id {userId} not found.\"");
+
+            watchlistItem.IsWatched = true;
+            try
             {
-                watchlistItem.IsWatched = true;
                 await _dbContext.SaveChangesAsync();
             }
+            catch (Exception)
+            {
+                throw;
+            }
+            return watchlistItem;
         }
 
         public async Task<List<WatchlistItem>> GetWatchlistItems(int userId)
@@ -53,6 +68,9 @@ namespace Movies.Infrastructure.Services.DataAccess.Implementation
             var watchlistItems = await _dbContext.WatchlistItems
                 .Where(w => w.UserId == userId)
                 .ToListAsync();
+
+            if (watchlistItems == null)
+                throw new DirectoryNotFoundException("$\"Content with user Id {userId} not found.\"");
 
             return watchlistItems;
         }

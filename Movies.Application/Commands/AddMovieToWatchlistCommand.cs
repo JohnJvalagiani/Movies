@@ -7,6 +7,7 @@ namespace Movies.API.Commands
     {
         public int UserId { get; set; }
         public int MovieId { get; set; }
-        public string MovieTitel { get; set; }
+        public string Title { get; set; }
+
     }
 }

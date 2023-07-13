@@ -9,8 +9,8 @@ namespace Movies.Infrastructure.Services.DataAccess.Interfaces
 {
     public interface IWatchlistRepository
     {
-        Task AddToWatchlist(WatchlistItem watchlistItem);
-        Task MarkAsWatched(int userId, int movieId);
+        Task<WatchlistItem> AddToWatchlist(WatchlistItem watchlistItem);
+        Task<WatchlistItem> MarkAsWatched(int userId, int movieId);
         Task<List<WatchlistItem>> GetWatchlistItems(int userId);
     }
 }

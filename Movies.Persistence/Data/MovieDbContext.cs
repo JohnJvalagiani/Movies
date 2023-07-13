@@ -18,7 +18,7 @@ namespace Movies.Persistence.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WatchlistItem>().HasKey(w => w.Id);
+            modelBuilder.Entity<WatchlistItem>().HasKey(e => e.Id); ;
         }
     }
 }

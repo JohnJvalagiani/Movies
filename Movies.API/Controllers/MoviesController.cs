@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.API.Commands;
 using Movies.API.Query;
 using Movies.Application.Models;
+using Movies.Domain.Entities;
 
 namespace Movies.API.Controllers
 {
@@ -17,34 +18,33 @@ namespace Movies.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("search")]
+        [HttpGet("SearchMovies")]
         public async Task<ActionResult<List<MovieResponse>>> SearchMovies([FromQuery] MovieSearchCommand query)
         {
             var movies = await _mediator.Send(query);
             return movies;
         }
 
-        [HttpPost("watchlist")]
+        [HttpPost("AddToWatchlist")]
         public async Task<IActionResult> AddToWatchlist(AddMovieToWatchlistCommand command)
         {
-            await _mediator.Send(command);
-            return Ok();
+            var watchListItem=await _mediator.Send(command);
+            return CreatedAtAction(nameof(AddToWatchlist), watchListItem);
         }
 
-        [HttpPut("watchlist/{movieId}/watched")]
-        public async Task<IActionResult> MarkAsWatched(int movieId, [FromBody] MarkAsWatchedCommand command)
+        [HttpPut("MarkAsWatched/{movieId}/watched")]
+        public async Task<IActionResult> MarkAsWatched( [FromBody] MarkAsWatchedCommand command)
         {
-            command.MovieId = movieId;
-            await _mediator.Send(command);
-            return Ok();
+            var watchlistItem=await _mediator.Send(command);
+            return watchlistItem != null ? Ok(watchlistItem) : NotFound();
         }
 
-        [HttpGet("watchlist/{userId}")]
+        [HttpGet("GetWatchlistItems/{userId}")]
         public async Task<ActionResult<List<WatchlistItemResponse>>> GetWatchlistItems(int userId)
         {
             var query = new GetWatchlistItemsQuery { UserId = userId };
             var watchlistItems = await _mediator.Send(query);
-            return watchlistItems;
+            return watchlistItems != null ? Ok(watchlistItems) : NotFound();
         }
     }
 
