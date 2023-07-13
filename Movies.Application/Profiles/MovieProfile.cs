@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Movies.API.Commands;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using System;
@@ -14,6 +15,7 @@ namespace Movies.Application.Profiles
         public MovieProfile()
         {
             CreateMap<WatchlistItemResponse, WatchlistItem>().ReverseMap();
+            CreateMap<AddMovieToWatchlistCommand, WatchlistItem>().ReverseMap();
             CreateMap<Movie, MovieResponse>().ReverseMap();
         }
     }

@@ -18,14 +18,14 @@ namespace Movies.API.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<List<MovieResponse>>> SearchMovies([FromQuery] MovieSearchQuery query)
+        public async Task<ActionResult<List<MovieResponse>>> SearchMovies([FromQuery] MovieSearchCommand query)
         {
             var movies = await _mediator.Send(query);
             return movies;
         }
 
         [HttpPost("watchlist")]
-        public async Task<IActionResult> AddToWatchlist(AddToWatchlistCommand command)
+        public async Task<IActionResult> AddToWatchlist(AddMovieToWatchlistCommand command)
         {
             await _mediator.Send(command);
             return Ok();

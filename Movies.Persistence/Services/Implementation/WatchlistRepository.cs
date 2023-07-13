@@ -19,16 +19,21 @@ namespace Movies.Infrastructure.Services.DataAccess.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task AddToWatchlist(int userId, Movie movie)
+        public async Task AddToWatchlist(WatchlistItem watchlistItem)
         {
-            var watchlistItem = new WatchlistItem
+            var theWatchlistItem = new WatchlistItem
             {
-                UserId = userId,
-                MovieId = movie.id,
-                Title = movie.title,
+                UserId = watchlistItem.UserId,
+                MovieId = watchlistItem.MovieId,
+                Title = watchlistItem.Title,
+                IsWatched= watchlistItem.IsWatched,
             };
             _dbContext.WatchlistItems.Add(watchlistItem);
-            await _dbContext.SaveChangesAsync();
+            var result= await _dbContext.SaveChangesAsync();
+            if(result==0)
+            {
+               
+            }
         }
 
         public async Task MarkAsWatched(int userId, int movieId)

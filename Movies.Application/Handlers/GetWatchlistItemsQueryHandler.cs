@@ -19,7 +19,6 @@ namespace Movies.API.Handlers
 
         public async Task<List<WatchlistItemResponse>> Handle(GetWatchlistItemsQuery request, CancellationToken cancellationToken)
         {
-            // Call the watchlist service to retrieve the watchlist items for the user
             var watchlistItems = await _watchlistService.GetWatchlistItems(request.UserId);
             return _mapper.Map<List< WatchlistItemResponse >>( watchlistItems);
         }

@@ -12,6 +12,6 @@ namespace Movies.Domain.Entities
         public int UserId { get; set; }
         public int MovieId { get; set; }
         public string Title { get; set; }
-        public bool IsWatched { get; set; }
+        public bool IsWatched { get; set; }=false;
     }
 }

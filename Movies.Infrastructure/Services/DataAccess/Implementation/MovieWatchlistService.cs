@@ -18,15 +18,14 @@ namespace Movies.Application.Services.Implementation
             _watchlistRepository = watchlistRepository;
         }
 
-        public async Task<bool> AddToWatchlist(int userId, Movie movie)
+        public async Task<bool> AddToWatchlist(WatchlistItem watchlistItem)
         {
-            await _watchlistRepository.AddToWatchlist(userId, movie);
+            await _watchlistRepository.AddToWatchlist(watchlistItem);
             return true;
         }
 
         public async Task<List<WatchlistItem>> GetWatchlistItems(int userId)
         {
-            // Retrieve the watchlist items for the user from the repository
             var watchlistItems = await _watchlistRepository.GetWatchlistItems(userId);
             return watchlistItems;
         }

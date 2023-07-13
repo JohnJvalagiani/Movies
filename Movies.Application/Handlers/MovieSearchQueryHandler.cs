@@ -6,7 +6,7 @@ using Movies.Application.Services.Interfaces;
 
 namespace Movies.API.Handlers
 {
-    public class MovieSearchQueryHandler : IRequestHandler<MovieSearchQuery, List<MovieResponse>>
+    public class MovieSearchQueryHandler : IRequestHandler<MovieSearchCommand, List<MovieResponse>>
     {
         private readonly ITmdbApiService _imdbApiService;
         private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ namespace Movies.API.Handlers
             _mapper = mapper;
         }
 
-        public async Task<List<MovieResponse>> Handle(MovieSearchQuery request, CancellationToken cancellationToken)
+        public async Task<List<MovieResponse>> Handle(MovieSearchCommand request, CancellationToken cancellationToken)
         {
             var movies = await _imdbApiService.SearchMovies(request.searchQuery);
             return _mapper.Map<List<MovieResponse>>( movies.results);

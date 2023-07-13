@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Movies.API.Commands;
 using Movies.API.Handlers;
+using Movies.API.Middlewares;
+using Movies.API.PipelineBehaviors;
 using Movies.API.Query;
 using Movies.Application.Models;
 using Movies.Application.Profiles;
@@ -35,12 +38,16 @@ namespace Movies.API
             Services.AddTransient<IMovieWatchlistService, MovieWatchlistService>();
             Services.AddTransient<IWatchlistRepository, WatchlistRepository>();
             Services.AddTransient<ITmdbApiService, TmdbApiService>();
-            Services.AddTransient<IRequestHandler<MovieSearchQuery, List<MovieResponse>>, MovieSearchQueryHandler>();
-            Services.AddTransient<IRequestHandler<AddToWatchlistCommand>, AddToWatchlistCommandHandler>();
+            Services.AddTransient<IRequestHandler<MovieSearchCommand, List<MovieResponse>>, MovieSearchQueryHandler>();
+            Services.AddTransient<IRequestHandler<AddMovieToWatchlistCommand, WatchlistItemResponse>, AddToWatchlistCommandHandler>();
             Services.AddTransient<IRequestHandler<MarkAsWatchedCommand>, MarkAsWatchedCommandHandler>();
             Services.AddTransient<IRequestHandler<GetWatchlistItemsQuery, List<WatchlistItemResponse>>, GetWatchlistItemsQueryHandler>();
             Services.Configure<ApiKeyConfiguration>(Configuration.GetSection("ApiKeyConfiguration"));
+            var ddef= Configuration.GetSection("ApiKeyConfiguration");
+            var def= Configuration.GetConnectionString("DefaultConnection");
             Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            Services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+            Services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehavior<,>));
             Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API Title", Version = "v1" });
@@ -57,6 +64,7 @@ namespace Movies.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseSwagger(c =>
             {
                 c.SerializeAsV2 = true;
