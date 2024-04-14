@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 
-namespace Movies.API.Middlewares
+namespace Movies.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

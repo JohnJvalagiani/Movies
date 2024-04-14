@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Movies.API.Commands;
 using Movies.API.Handlers;
-using Movies.API.Middlewares;
+using Movies.API.Middleware;
 using Movies.API.PipelineBehaviors;
 using Movies.API.Query;
 using Movies.Application.Models;
